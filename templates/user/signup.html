@@ -1,0 +1,45 @@
+{% extends 'root.html' %}
+
+{% load static %}
+
+{% block title %}
+    
+{% endblock title %}
+
+{% block doc %}
+<div class="container m-3 p-5">
+    <div class="row">
+        <div class="col-sm-6 text-black">
+
+            <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+
+                <form style="width: 23rem;" method="post" action="{% url 'REGISTER' %}">
+
+                    <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">ثبت نام</h3>
+
+                    
+                    {% for field in form %}
+                        <div class="form-outline mb-4">
+                            <label for="">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+
+                    {% csrf_token %}
+
+                    <div class="pt-1 mb-4">
+                        <button class="btn btn-info btn-lg btn-block" type="button">ثبت</button>
+                    </div>
+
+                    <p class="small mb-5 pb-lg-2"><a class="text-muted" href="{% url 'LOGIN' %}">وارد شوید</a></p>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock doc %}

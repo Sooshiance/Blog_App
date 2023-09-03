@@ -1,0 +1,6 @@
+{% autoescape off %}
+    Hi {{ user.username }}
+    Please click link below to confirm your registeration : 
+
+    {{ protocol }}://{{domain}}{% url 'RESET' uidb64=uid token=token %}
+{% endautoescape %}

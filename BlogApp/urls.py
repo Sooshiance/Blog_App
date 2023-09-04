@@ -5,5 +5,5 @@ from .views import *
 
 urlpatterns = [
     path('', allPost, name='POSTS'),
-    path('<str:title>/', seinglePost, name='POST'),
+    path('<str:title>/', singlePost, name='POST'),
 ]

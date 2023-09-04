@@ -59,3 +59,6 @@ class Complaicent(models.Model):
     
     def __str__(self) -> str:
         return f"{self.user} {self.comment} {self.admin_approval}"
+    
+    class Meta:
+        ordering = ['-created_at']

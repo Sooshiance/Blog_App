@@ -30,3 +30,4 @@ class LikeAdmin(admin.ModelAdmin):
 @admin.register(Complaicent)
 class ComplacentAdmin(admin.ModelAdmin):
     list_display = ['user', 'comment', 'admin_approval']
+    list_filter = (('created_at', JDateFieldListFilter),)

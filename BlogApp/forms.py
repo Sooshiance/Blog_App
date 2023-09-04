@@ -14,7 +14,7 @@ class UserPost(forms.ModelForm):
         }
 
 
-class UserPost(forms.ModelForm):
+class UserComment(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['txt']
@@ -23,7 +23,7 @@ class UserPost(forms.ModelForm):
         }
 
 
-class UserPost(forms.ModelForm):
+class UserLike(forms.ModelForm):
     class Meta:
         model = Like
         fields = ['vote']

@@ -12,6 +12,7 @@ class Post(models.Model):
     title          = models.CharField(max_length=256, verbose_name='سر برگ', unique=True, primary_key=True)
     txt            = models.CharField(max_length=16384, verbose_name='متن')
     is_private     = models.BooleanField(default=False, verbose_name='خصوصی')
+    pic            = models.ImageField(upload_to='', verbose_name='', default='')
     admin_approval = models.BooleanField(default=False, verbose_name='تایید مدیر')
     created_at     = jmodels.jDateTimeField(auto_now_add=True, verbose_name='ایجاد شده در')
     updated_at     = jmodels.jDateTimeField(auto_now=True, verbose_name='به روز شده')

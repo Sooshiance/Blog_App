@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'jdatetime',
     'UserApp.apps.UserappConfig',
     'BlogApp.apps.BlogappConfig',
-    # 'ProfileApp.apps.ProfileappConfig',
 ]
 
 MIDDLEWARE = [

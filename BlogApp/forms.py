@@ -1,6 +1,6 @@
 from django import forms 
 
-from .models import Post, Comment, Like
+from .models import Post, Comment, Like, Complaint
 
 
 class UserPost(forms.ModelForm):
@@ -29,4 +29,13 @@ class UserLike(forms.ModelForm):
         fields = ['vote']
         widgets = {
             'vote': forms.NumberInput(attrs={'class':'form-control my-5'}),
+        }
+
+
+class UserComplante(forms.ModelForm):
+    class Meta:
+        model = Complaint
+        fields = ['txt']
+        widgets = {
+            'txt': forms.Textarea(attrs={'class':'form-control my-5'}),
         }

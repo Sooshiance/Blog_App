@@ -2,7 +2,7 @@ from django.contrib import admin
 from django_jalali.admin.filters import JDateFieldListFilter
 import django_jalali.admin as jadmin
 
-from .models import Post, Comment, Like, Complaicent
+from .models import Post, Comment, Like, Complaint
 
 
 @admin.register(Post)
@@ -27,7 +27,7 @@ class LikeAdmin(admin.ModelAdmin):
     list_display = ['user', 'post', 'vote']
 
 
-@admin.register(Complaicent)
+@admin.register(Complaint)
 class ComplacentAdmin(admin.ModelAdmin):
     list_display = ['user', 'comment', 'admin_approval']
     list_filter = (('created_at', JDateFieldListFilter),)

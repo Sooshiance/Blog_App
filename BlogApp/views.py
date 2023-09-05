@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q 
 
-from .models import Post, Comment, Like, Complaicent
-from .forms import UserPost, UserComment, UserLike
+from .models import Post, Comment, Like, Complaint
+from .forms import UserPost, UserComment, UserLike, UserComplante
 
 
 def allPost(request):
@@ -45,6 +45,9 @@ def sendComment(request, title):
         if request.method == 'POST':
             form = UserComment(request.POST)
             post = Post.objects.get(title=title)
+            if form.is_valid():
+                txt = form.cleaned_data['txt']
+                c = Comment.objects.create(txt=txt,comment=post,user=request.user)
         else:
             form = UserComment()
         return render(request, 'blog/sendcomment.html', {'form':form})
@@ -60,6 +63,18 @@ def sendLike(request, title):
         else:
             form = UserLike()
         return render(request, 'blog/sendlike.html', {'form':form})
+    else:
+        messages.info(request, '')
+        return redirect('LOGIN')
+
+
+def sendComplante(request, comment):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = UserComplante(request.POST)
+        else:
+            form = UserComplante()
+        return render(request, 'blog/sendcomplante.html', {'form':form})
     else:
         messages.info(request, '')
         return redirect('LOGIN')

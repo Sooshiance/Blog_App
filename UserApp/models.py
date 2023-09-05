@@ -67,6 +67,7 @@ class User(AbstractBaseUser):
     email        = models.EmailField(verbose_name='پست الکترونیکی', unique=True, max_length=244, help_text='این فیلد الزامی میباشد')
     first_name   = models.CharField(max_length=30, null=True, blank=True, verbose_name='نام', help_text='این فیلد الزامی میباشد')
     last_name    = models.CharField(max_length=50, null=True, blank=True, verbose_name='نام خانوادگی', help_text='این فیلد الزامی میباشد')
+    pic          = models.ImageField(null=True, blank=True, verbose_name='عکس پروفایل', upload_to='user/', default='')
     is_active    = models.BooleanField(default=False, null=False, verbose_name='وضعیت فعالیت')
     is_staff     = models.BooleanField(default=False, null=False, verbose_name='دسترسی ادمین')
     is_superuser = models.BooleanField(default=False, null=False, verbose_name='مدیر')
@@ -92,11 +93,12 @@ class User(AbstractBaseUser):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='کاربر')
-    email = models.EmailField(verbose_name='پست الکترونیکی')
-    phone = models.CharField(max_length=11, verbose_name='شماره تماس')
+    user        = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='کاربر')
+    email       = models.EmailField(verbose_name='پست الکترونیکی')
+    phone       = models.CharField(max_length=11, verbose_name='شماره تماس')
     first_name  = models.CharField(max_length=30, null=True, blank=True, verbose_name='نام')
     last_name   = models.CharField(max_length=50, null=True, blank=True, verbose_name='نام خانوادگی')
+    pic         = models.ImageField(null=True, blank=True, verbose_name='عکس پروفایل', upload_to='user/', default='')
     
     def __str__(self) -> str:
-        return f"{self.user} {self.email}"
+        return f"{self.user} {self.email} {self.pk}"

@@ -9,4 +9,5 @@ urlpatterns = [
     path('post/', sendPost, name='POST'),
     path('<str:title>/comment/', sendComment, name='COMMENT'),
     path('<str:title>/like/', sendLike, name='LIKE'),
+    path('<str:comment>/complante/', sendComplante, name='COMPLANTE'),
 ]

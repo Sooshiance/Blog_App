@@ -51,7 +51,7 @@ class Like(models.Model):
         return f"{self.user} {self.post} {self.vote}"
 
 
-class Complaicent(models.Model):
+class Complaint(models.Model):
     user           = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_complaine', verbose_name='کاربر')
     comment        = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='complained_comment', verbose_name='دیدگاه')
     txt            = models.CharField(max_length=4096, verbose_name='متن اعتراض')

@@ -1,19 +1,27 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models import F 
 from django.db.models import Q 
 
-from .models import Post, Comment, Like, Complaint
+from .models import Post, Comment, Like, Complaint, Counter
 from .forms import UserPost, UserComment, UserLike, UserComplante
 
 
 def allPost(request):
+    counter, created = Counter.objects.get_or_create(title='allPost', defaults={'value': 0})
+    counter.value = F('value') + 1
+    counter.save()
     posts = Post.objects.all().filter(is_private=False)
-    return render(request, 'blog/index.html', {'posts':posts})
+    c = Counter.objects.get(view_name='allPost')
+    return render(request, 'blog/index.html', {'posts':posts, 'counts':c})
 
 
 def singlePost(request, title):
     post = Post.objects.get(title=title)
     comments = Comment.objects.all().filter(post=title).filter(admin_approval=True)
+    counter, created = Counter.objects.get_or_create(title='singlePost', defaults={'value': 0})
+    counter.value = F('value') + 1
+    counter.save()
     return render(request, 'blog/post.html', {'post':post, 'comments':comments})
 
 
@@ -48,6 +56,12 @@ def sendComment(request, title):
             if form.is_valid():
                 txt = form.cleaned_data['txt']
                 c = Comment.objects.create(txt=txt,comment=post,user=request.user)
+                c.save()
+                messages.success(request, '')
+                return redirect('')
+            else:
+                messages.error(request, f"{form.errors}")
+                return redirect('')
         else:
             form = UserComment()
         return render(request, 'blog/sendcomment.html', {'form':form})

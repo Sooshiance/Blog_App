@@ -7,6 +7,14 @@ from django_jalali.db import models as jmodels
 User = settings.AUTH_USER_MODEL
 
 
+class Counter(models.Model):
+    view_name = models.CharField(max_length=50, unique=True, primary_key=True, verbose_name='نام')
+    total_see = models.DecimalField(max_digits=18, decimal_places=0, default=0, verbose_name='مجموع بازدیدها')
+    
+    def __str__(self) -> str:
+        return f"{self.view_name} {self.total_see}"
+
+
 class Post(models.Model):
     user           = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts', verbose_name='کاربر')
     title          = models.CharField(max_length=256, verbose_name='سر برگ', unique=True, primary_key=True)

@@ -15,8 +15,34 @@ class Counter(models.Model):
         return f"{self.view_name} {self.total_see}"
 
 
+class Subject:
+    TECHNOLOGY = 1
+    FASHION = 2
+    SPORT = 3
+    FOOD = 4
+    REPORT = 5
+    
+    TAGS = (
+        (TECHNOLOGY, 'فناوری'),
+        (FASHION, 'فشن'),
+        (SPORT, 'ورزشی'),
+        (FOOD, 'خوراکی'),
+        (REPORT, 'اخبار'),
+    )
+
+
+class Tag(models.Model):
+    title = models.PositiveSmallIntegerField(choices=Subject.TAGS, verbose_name='نام')
+    description = models.CharField(max_length=1024, verbose_name='توضیحات')
+    created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name='ایجاد شده در')
+    
+    def __str__(self) -> str:
+        return f"{self.title}"
+
+
 class Post(models.Model):
     user           = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts', verbose_name='کاربر')
+    tags           = models.ForeignKey(Tag, on_delete=models.CASCADE, verbose_name='')
     title          = models.CharField(max_length=256, verbose_name='سر برگ', unique=True, primary_key=True)
     txt            = models.CharField(max_length=16384, verbose_name='متن')
     is_private     = models.BooleanField(default=False, verbose_name='خصوصی')

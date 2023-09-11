@@ -2,12 +2,17 @@ from django.contrib import admin
 from django_jalali.admin.filters import JDateFieldListFilter
 import django_jalali.admin as jadmin
 
-from .models import Counter, Post, Comment, Like, Complaint
+from .models import Counter, Post, Comment, Like, Complaint, Tag 
 
 
 @admin.register(Counter)
 class CounterAdmin(admin.ModelAdmin):
     list_display = ['view_name', 'total_see']
+
+
+@admin.register(Tag)
+class TAdmin(admin.ModelAdmin):
+    list_display = ['title']
 
 
 @admin.register(Post)

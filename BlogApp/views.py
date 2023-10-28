@@ -17,11 +17,11 @@ def allPost(request):
 
 
 def singlePost(request, title):
-    post = Post.objects.get(title=title)
     comments = Comment.objects.all().filter(post=title).filter(admin_approval=True)
     counter, created = Counter.objects.get_or_create(title='singlePost', defaults={'value': 0})
     counter.value = F('value') + 1
     counter.save()
+    post = Post.objects.get(title=title)
     return render(request, 'blog/post.html', {'post':post, 'comments':comments})
 
 
@@ -55,7 +55,7 @@ def sendComment(request, title):
             post = Post.objects.get(title=title)
             if form.is_valid():
                 txt = form.cleaned_data['txt']
-                c = Comment.objects.create(txt=txt,comment=post,user=request.user)
+                c = Comment.objects.create(txt=txt,post=post,user=request.user)
                 c.save()
                 messages.success(request, '')
                 return redirect('')

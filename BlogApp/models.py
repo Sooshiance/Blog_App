@@ -42,7 +42,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     user           = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts', verbose_name='کاربر')
-    tags           = models.ForeignKey(Tag, on_delete=models.CASCADE, verbose_name='')
+    tags           = models.ForeignKey(Tag, on_delete=models.CASCADE, verbose_name='برچسب')
     title          = models.CharField(max_length=256, verbose_name='سر برگ', unique=True, primary_key=True)
     txt            = models.CharField(max_length=16384, verbose_name='متن')
     is_private     = models.BooleanField(default=False, verbose_name='خصوصی')

@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import F 
 from django.db.models import Q 
+from django_ratelimit.decorators import ratelimit
 
 from .models import Post, Comment, Like, Complaint, Counter
 from .forms import UserPost, UserComment, UserLike, UserComplante
 
 
 def allPost(request):
-    counter, created = Counter.objects.get_or_create(title='allPost', defaults={'value': 0})
+    counter, created = Counter.objects.get_or_create(view_name='allPost', defaults={'value':0})
     counter.value = F('value') + 1
     counter.save()
     posts = Post.objects.all().filter(is_private=False)
@@ -16,6 +17,7 @@ def allPost(request):
     return render(request, 'blog/index.html', {'posts':posts, 'counts':c})
 
 
+@ratelimit(key="ip", rate='25/s', block=True)
 def singlePost(request, title):
     comments = Comment.objects.all().filter(post=title).filter(admin_approval=True)
     counter, created = Counter.objects.get_or_create(title='singlePost', defaults={'value': 0})
@@ -48,6 +50,7 @@ def sendPost(request):
         return redirect('LOGIN')
 
 
+@ratelimit(key="ip", rate='10/s', block=True)
 def sendComment(request, title):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -70,6 +73,7 @@ def sendComment(request, title):
         return redirect('LOGIN')
 
 
+@ratelimit(key="ip", rate='25/s', block=True)
 def sendLike(request, title):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -82,6 +86,7 @@ def sendLike(request, title):
         return redirect('LOGIN')
 
 
+@ratelimit(key="ip", rate='5/s', block=True)
 def sendComplante(request, comment):
     if request.user.is_authenticated:
         if request.method == 'POST':
